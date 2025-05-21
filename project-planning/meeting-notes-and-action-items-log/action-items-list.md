@@ -1,4 +1,4 @@
-﻿# Action Items List Template
+# Action Items List Template
 
 ## Template Usage Instructions
 

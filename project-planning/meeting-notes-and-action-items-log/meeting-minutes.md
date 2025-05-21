@@ -1,4 +1,4 @@
-﻿# Meeting Minutes Template
+# Meeting Minutes Template
 
 ## Template Usage Instructions
 

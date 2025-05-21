@@ -1,4 +1,4 @@
-﻿# Information Requirements Matrix Template
+# Information Requirements Matrix Template
 
 ## Template Usage Instructions
 

@@ -1,4 +1,4 @@
-﻿# Stakeholder Interview and Meeting Guides Template
+# Stakeholder Interview and Meeting Guides Template
 
 ## Template Usage Instructions
 

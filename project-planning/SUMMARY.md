@@ -1,4 +1,4 @@
-﻿# AI-Friendly Documentation Templates Guide
+# AI-Friendly Documentation Templates Guide
 
 ## Template Usage Instructions
 

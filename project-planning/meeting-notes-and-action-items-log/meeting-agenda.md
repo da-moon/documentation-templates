@@ -1,4 +1,4 @@
-﻿# Meeting Agenda Template
+# Meeting Agenda Template
 
 ## Template Usage Instructions
 

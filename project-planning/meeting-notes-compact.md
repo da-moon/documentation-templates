@@ -1,4 +1,4 @@
-﻿# Meeting Notes Compact Template
+# Meeting Notes Compact Template
 
 ## Template Usage Instructions
 

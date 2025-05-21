@@ -1,4 +1,4 @@
-﻿# Next Steps and Discovery Phase Action Plan Template
+# Next Steps and Discovery Phase Action Plan Template
 
 ## Template Usage Instructions
 

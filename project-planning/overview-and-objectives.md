@@ -1,4 +1,4 @@
-﻿# Project Overview and Objectives Template
+# Project Overview and Objectives Template
 
 ## Template Usage Instructions
 

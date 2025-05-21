@@ -1,4 +1,4 @@
-﻿# Methodology and Approach Template
+# Methodology and Approach Template
 
 ## Template Usage Instructions
 

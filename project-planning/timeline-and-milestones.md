@@ -1,4 +1,4 @@
-﻿# Project Timeline and Milestones Template
+# Project Timeline and Milestones Template
 
 ## Template Usage Instructions
 

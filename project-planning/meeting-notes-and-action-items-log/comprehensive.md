@@ -1,4 +1,4 @@
-﻿# Comprehensive Meeting Documentation Template
+# Comprehensive Meeting Documentation Template
 
 ## Template Usage Instructions
 

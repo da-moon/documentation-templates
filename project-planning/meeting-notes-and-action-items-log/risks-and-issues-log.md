@@ -1,4 +1,4 @@
-﻿# Risks and Issues Log Template
+# Risks and Issues Log Template
 
 ## Template Usage Instructions
 

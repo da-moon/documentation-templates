@@ -1,4 +1,4 @@
-﻿# Summary of Key Decisions and Action Items Template
+# Summary of Key Decisions and Action Items Template
 
 ## Template Usage Instructions
 

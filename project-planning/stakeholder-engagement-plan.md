@@ -1,4 +1,4 @@
-﻿# Stakeholder Engagement Plan Template
+# Stakeholder Engagement Plan Template
 
 ## Template Usage Instructions
 

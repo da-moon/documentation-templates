@@ -1,4 +1,4 @@
-﻿# Project Documentation Quick Reference Template
+# Project Documentation Quick Reference Template
 
 ## Template Usage Instructions
 

@@ -1,4 +1,4 @@
-﻿# Executive Summary Template
+# Executive Summary Template
 
 ## Template Usage Instructions
 

@@ -1,4 +1,4 @@
-﻿# Proof of Concept (POC) Development Plan Template
+# Proof of Concept (POC) Development Plan Template
 
 ## Template Usage Instructions
 

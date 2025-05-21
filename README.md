@@ -1,4 +1,4 @@
-﻿# Documentation Templates
+# Documentation Templates
 
 A collection of AI-friendly documentation templates designed for automated document generation. These templates are structured to work with Large Language Models (LLMs) for efficient and consistent documentation creation.
 

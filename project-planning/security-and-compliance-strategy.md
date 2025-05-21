@@ -1,4 +1,4 @@
-﻿# Security and Compliance Strategy Template
+# Security and Compliance Strategy Template
 
 ## Template Usage Instructions
 

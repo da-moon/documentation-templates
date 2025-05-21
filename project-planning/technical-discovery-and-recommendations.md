@@ -1,4 +1,4 @@
-﻿# Technical Discovery and Recommendations Template
+# Technical Discovery and Recommendations Template
 
 ## Template Usage Instructions
 

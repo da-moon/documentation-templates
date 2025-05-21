@@ -1,65 +1,142 @@
-# Meeting Minutes
+﻿# Meeting Minutes Template
 
-## Meeting Details
+## Template Usage Instructions
 
-- **Meeting Title**: [Descriptive title]
-- **Date and Time**: [MM/DD/YYYY, HH:MM AM/PM]
-- **Location/Format**: [Physical location or virtual platform]
-- **Facilitator**: [Name]
-- **Note Taker**: [Name]
+This template helps AI systems generate structured meeting minutes based on user inputs:
+- Use {{placeholder}} for variable information
+- Follow <prompt: question> format for gathering specific details
+- [Optional] sections can be included based on meeting type and needs
 
-## Attendees
+## 1. Meeting Metadata
 
-- **Name** - [Role/Title], [Department/Team]
-- **Name** - [Role/Title], [Department/Team]
+### 1.1 Basic Information
+<prompt: What are the basic details of this meeting?>
+- Meeting Title: {{meeting_title}}
+- Date: {{meeting_date}}
+- Time: {{start_time}} - {{end_time}}
+- Location/Platform: {{meeting_location}} <prompt: Is this virtual or physical?>
+- Meeting Type: {{meeting_type}} <prompt: Is this regular/recurring or special?>
 
-## Agenda
+### 1.2 Meeting Roles
+<prompt: Who are the key meeting participants?>
+- Organizer: {{organizer_name}} - {{organizer_role}}
+- Facilitator: {{facilitator_name}} [Optional]
+- Note Taker: {{note_taker_name}}
 
-1. **Topic 1**
-2. **Topic 2**
-3. **Topic 3**
+## 2. Attendance
 
-## Discussion Summary
+### 2.1 Present
+<prompt: Who attended the meeting?>
+{{for_each_attendee}}
+- Name: {{attendee_name}}
+  - Role: {{attendee_role}}
+  - Team/Department: {{attendee_department}}
+{{end_for_each}}
 
-### Topic 1
+### 2.2 Apologies/Absent [Optional]
+<prompt: Who was invited but couldn't attend?>
+- {{absent_attendees}}
 
-- [Key points discussed]
-- [Insights gained]
+## 3. Agenda and Objectives
 
-### Topic 2
+### 3.1 Meeting Purpose
+<prompt: What is the primary purpose of this meeting?>
+- Primary Objective: {{meeting_objective}}
+- Expected Outcomes: {{expected_outcomes}}
 
-- [Key points discussed]
-- [Insights gained]
+### 3.2 Agenda Items
+<prompt: What items were discussed?>
+{{for_each_agenda_item}}
+1. {{agenda_item_title}}
+   - Allocated Time: {{time_allocation}}
+   - Presenter: {{presenter_name}}
+{{end_for_each}}
 
-### Topic 3
+## 4. Discussion Points
 
-- [Key points discussed]
-- [Insights gained]
+### 4.1 Detailed Notes
+<prompt: What was discussed for each agenda item?>
+{{for_each_agenda_item}}
+#### {{agenda_item_title}}
+- Key Points Discussed:
+  {{discussion_points}}
+- Insights/Observations:
+  {{insights}}
+- Challenges/Concerns:
+  {{challenges}} [Optional]
+{{end_for_each}}
 
-## Key Decisions
+## 5. Decisions and Outcomes
 
-1. **Decision 1**: [Description]
-2. **Decision 2**: [Description]
+### 5.1 Key Decisions
+<prompt: What decisions were made during the meeting?>
+{{for_each_decision}}
+- Decision: {{decision_description}}
+  - Context: {{decision_context}}
+  - Impact: {{decision_impact}}
+  - Agreed by: {{decision_makers}}
+{{end_for_each}}
 
-## Action Items
+### 5.2 Voting Results [Optional]
+<prompt: Were any formal votes taken?>
+{{for_each_vote}}
+- Topic: {{vote_topic}}
+  - In Favor: {{votes_in_favor}}
+  - Against: {{votes_against}}
+  - Abstained: {{votes_abstained}}
+{{end_for_each}}
 
-| ID     | Description                                        | Assigned To | Due Date     | Priority | Status      | Comments |
-| ------ | -------------------------------------------------- | ----------- | ------------ | -------- | ----------- | -------- |
-| AI-001 | [Prepare Stakeholder Engagement Plan]              | [Name]      | [MM/DD/YYYY] | High     | In Progress | [Notes]  |
-| AI-002 | [Provide contacts for Infrastructure and Security] | [Name]      | [MM/DD/YYYY] | Medium   | Not Started | [Notes]  |
+## 6. Action Items
 
-## Next Steps
+### 6.1 New Action Items
+<prompt: What new tasks or actions were assigned?>
+{{for_each_action_item}}
+- ID: {{action_item_id}}
+  - Description: {{action_description}}
+  - Assigned To: {{assignee}}
+  - Due Date: {{due_date}}
+  - Priority: {{priority_level}}
+  - Status: {{current_status}}
+{{end_for_each}}
 
-- **Immediate Actions**:
-  - [Summary of actions to be taken]
-- **Upcoming Meetings**:
-  - [Date and purpose]
-- **Preparation for Next Meeting**:
-  - [Tasks or materials needed]
+### 6.2 Previous Action Items Update [Optional]
+<prompt: What is the status of previous action items?>
+{{for_each_previous_action}}
+- ID: {{previous_action_id}}
+  - Status Update: {{status_update}}
+  - Next Steps: {{next_steps}}
+{{end_for_each}}
 
-## Attachments/Appendices
+## 7. Next Steps
 
-- **Documents**:
-  - [List of documents shared]
-- **Reference Materials**:
-  - [Links to reference materials]
+### 7.1 Immediate Actions
+<prompt: What needs to happen right after this meeting?>
+- {{immediate_actions}}
+
+### 7.2 Next Meeting
+<prompt: What are the details for the next meeting?>
+- Date/Time: {{next_meeting_datetime}}
+- Focus Areas: {{next_meeting_focus}}
+- Required Preparation: {{preparation_needed}}
+
+## 8. Additional Information
+
+### 8.1 References and Links
+<prompt: What supporting materials were referenced?>
+- Documents Shared: {{shared_documents}}
+- Reference Materials: {{reference_materials}}
+
+### 8.2 Parking Lot Items [Optional]
+<prompt: What items were deferred for future discussion?>
+- {{parking_lot_items}}
+
+## Metadata
+- Minutes Version: {{version_number}}
+- Last Updated: {{last_update_timestamp}}
+- Generated By: AI Meeting Assistant
+- Template Version: 1.0
+
+## Review and Approval [Optional]
+- Reviewed By: {{reviewer_name}}
+- Approved By: {{approver_name}}
+- Approval Date: {{approval_date}}

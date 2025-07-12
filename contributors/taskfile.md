@@ -14,13 +14,17 @@
 | R8      | Include default task in every taskfile                             |
 | R9      | Add `desc:` to every task                                          |
 | R10     | Split PowerShell commands with platforms                           |
-| R11     | Use literal style `\|` for all commands                            |
+| R11     | Use literal style for all commands                                 |
 | R12     | Use `status:` field to skip already-completed operations           |
 | R13     | Extract repeated environment variables to task-level or file-level |
 | R14     | Use `sources:` for file-based task invalidation                    |
 | R15     | Use `dotenv:` for environment file loading                         |
 | R16     | Mark user-facing tasks with `interactive: true`                    |
 | R17     | Avoid complex inline command building - use internal tasks         |
+| R18     | Remove echo-only tasks - taskfiles are self-documenting            |
+| R19     | Remove all unnecessary output - no colors or progress messages     |
+| R20     | Ensure all task dependencies are resolvable                        |
+| R21     | Use proper platform conditionals in preconditions                  |
 
 ---
 
@@ -411,6 +415,141 @@ tasks:
           golint {{.GO_FILES}}
 ```
 
+## R18: Remove echo-only tasks
+
+Tasks that only echo or print information are useless. Taskfiles are
+self-documenting through `desc:` fields and the default task with fzf provides
+interactive discovery.
+
+```yaml
+# ❌ BAD
+tasks:
+  detect-tool:
+    desc: "Auto-detect tool name"
+    cmds:
+      - cmd: |
+          echo "Auto-detected tool: {{.TOOL_FINAL}}"
+
+  show-results:
+    desc: "Display build results"
+    cmds:
+      - cmd: |
+          echo "==> Results:"
+          ls -hl bin/
+
+  help:
+    desc: "Show usage"
+    cmds:
+      - cmd: |
+          echo "Usage: task build"
+
+# ✅ GOOD
+tasks:
+  # Remove these tasks entirely
+  # The default task with fzf provides discovery
+  # Task descriptions provide documentation
+```
+
+## R19: Remove all unnecessary output
+
+Tasks should be silent by default. Remove color variables and progress
+messages.
+
+```yaml
+# ❌ BAD
+vars:
+  RED: '\033[0;31m'
+  GREEN: '\033[0;32m'
+  YELLOW: '\033[1;33m'
+
+tasks:
+  build:
+    cmds:
+      - cmd: |
+          echo -e "{{.GREEN}}==> Building...{{.NC}}"
+          go build -o bin/app
+          echo -e "{{.GREEN}}Build complete!{{.NC}}"
+
+# ✅ GOOD
+tasks:
+  build:
+    desc: "Build application"
+    preconditions:
+      - sh: which go
+        msg: "Go not found"
+    cmds:
+      - cmd: |
+          go build -o bin/app
+```
+
+## R20: Ensure all task dependencies are resolvable
+
+All task references must be resolvable within the taskfile's context, including
+proper includes for external dependencies.
+
+```yaml
+# ❌ BAD
+version: '3'
+
+tasks:
+  clean:
+    cmds:
+      - task: utils:trash  # Fails - utils not included
+        vars:
+          TARGET_PATH: bin
+
+  helper:
+    cmds:
+      - task: nonexistent:task  # Fails - reference doesn't exist
+
+# ✅ GOOD
+version: '3'
+
+includes:
+  utils: "../utils/Taskfile.yaml"
+
+tasks:
+  clean:
+    cmds:
+      - task: utils:trash  # Works - utils is included
+        vars:
+          TARGET_PATH: bin
+
+  helper:
+    deps: [_internal-helper]  # Works - internal task exists
+
+  _internal-helper:
+    internal: true
+    cmds:
+      - echo "helper"
+```
+
+## R21: Use proper platform conditionals in preconditions
+
+Preconditions must handle platform differences using Go templating with correct
+syntax for each platform.
+
+```yaml
+# ❌ BAD
+tasks:
+  stop-processes:
+    preconditions:
+      - sh: command -v pgrep || command -v ps
+        msg: "Process tools not available"
+
+# ✅ GOOD
+tasks:
+  stop-processes:
+    preconditions:
+      - sh: |
+          {{if eq OS "windows"}}
+            powershell -NoProfile -Command "try { Get-Command Get-Process -ErrorAction Stop; exit 0 } catch { exit 1 }"
+          {{else}}
+            command -v pgrep >/dev/null 2>&1 || command -v ps >/dev/null 2>&1
+          {{end}}
+        msg: "Process management tools not available"
+```
+
 ## Common Variables Pattern
 
 ```yaml
@@ -429,11 +568,15 @@ vars:
 
 ## Testing Checklist
 
-- [ ] Default task works: `task`
-- [ ] All tasks have preconditions
-- [ ] All commands use literal style `|`
-- [ ] Platform commands are split
-- [ ] File operations use utils:trash
-- [ ] No repeated env vars across tasks
-- [ ] Complex commands use internal tasks
-- [ ] Each task runs individually
+- \[ ] Default task works: `task`
+- \[ ] All tasks have preconditions
+- \[ ] All commands use literal style `|`
+- \[ ] Platform commands are split
+- \[ ] File operations use utils:trash
+- \[ ] No repeated env vars across tasks
+- \[ ] Complex commands use internal tasks
+- \[ ] No echo-only tasks (R18)
+- \[ ] No color variables or unnecessary output (R19)
+- \[ ] All task dependencies resolvable (R20)
+- \[ ] Platform-aware preconditions (R21)
+- \[ ] Each task runs individually

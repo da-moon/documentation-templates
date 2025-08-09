@@ -9,8 +9,8 @@
 | R3      | All modules must be directories, never single files              |
 | R4      | Each module directory has local errors.rs file                   |
 | R5      | Use mod.rs for clean re-exports from submodules                  |
-| R6      | One-to-one mapping between test files and source files           |
-| R7      | Test file naming mirrors directory structure                     |
+| R6      | One-to-one test files in flat tests/ directory                   |
+| R7      | Test file names flatten source paths with underscores            |
 | R8      | Common functionality goes in common/ directory                   |
 | R9      | Shared traits in common/traits.rs or common/traits/              |
 | R10     | Constants in constants.rs or common/constants.rs                 |
@@ -158,33 +158,36 @@ pub use errors::ParserError;
 use crate::parser::{JsonParser, XmlParser, ParserError};
 ```
 
-## R6: One-to-one mapping between test files and source files
+## R6: One-to-one test files in flat tests/ directory
+
+All test files live directly under the `tests/` directory with no subdirectories. Maintain a one-to-one mapping between source files and test files. In workspaces, each member crate maintains its own top-level `tests/` directory.
 
 ```rust
-// ✅ GOOD - One-to-one test mapping
+// ✅ GOOD - One-to-one test mapping in flat tests/ directory
 src/parser/xml/
-├── mod.rs
-├── errors.rs
 ├── parser.rs
 └── validator.rs
 
-tests/parser/xml/
-├── parser.rs      // Tests src/parser/xml/parser.rs
-└── validator.rs   // Tests src/parser/xml/validator.rs
+tests/
+├── parser_xml_parser.rs      // Tests src/parser/xml/parser.rs
+└── parser_xml_validator.rs   // Tests src/parser/xml/validator.rs
 ```
 
-## R7: Test file naming mirrors directory structure
+## R7: Test file names flatten source paths with underscores
+
+Construct test file names by taking the path under `src/`, replacing `/` with `_`, and keeping the original file name. Place the result directly under `tests/`.
 
 ```rust
-// ✅ GOOD - Mirror structure exactly
-// For src/parser/xml/parser.rs
-// Create tests/parser/xml/parser.rs
+// ✅ GOOD - Flatten path with underscores (no subdirectories)
+src/file.rs                   → tests/file.rs
+src/module/file.rs            → tests/module_file.rs
+src/a/b/c/file.rs             → tests/a_b_c_file.rs
+src/parser/xml/parser.rs      → tests/parser_xml_parser.rs
+src/core/database/connection.rs → tests/core_database_connection.rs
 
-// For src/core/database/connection.rs
-// Create tests/core/database/connection.rs
-
-// NOT tests/parser_xml_parser.rs
-// NOT tests/src_parser_xml_parser.rs
+// ❌ BAD - Nested directories under tests/
+tests/parser/xml/parser.rs
+tests/core/database/connection.rs
 ```
 
 ## R8: Common functionality goes in common/ directory
@@ -902,14 +905,12 @@ src/
 
 ```
 tests/
-├── parser/
-│   ├── common/
-│   │   └── traits.rs       # Tests src/parser/common/traits.rs
-│   ├── json/
-│   │   └── parser.rs       # Tests src/parser/json/parser.rs
-│   └── xml/
-│       └── parser.rs       # Tests src/parser/xml/parser.rs
+├── parser_common_traits.rs       # Tests src/parser/common/traits.rs
+├── parser_json_parser.rs         # Tests src/parser/json/parser.rs
+└── parser_xml_parser.rs          # Tests src/parser/xml/parser.rs
 ```
+
+Each workspace member (crate) keeps its own `tests/` directory following this flat, underscore-delimited convention.
 
 ## Error Handling Pattern
 
@@ -993,7 +994,7 @@ where
 - [ ] **All functions under 20 lines**
 - [ ] All tests in tests/ directory, never in source files
 - [ ] One-to-one mapping between source and test files
-- [ ] Test file paths mirror source file paths exactly
+- [ ] Test file names flatten source paths with underscores; tests/ is flat (no subdirectories)
 - [ ] No unwrap() or expect() in production code
 - [ ] Derive macros used instead of manual implementations
 - [ ] Traits defined for extensibility and flexibility

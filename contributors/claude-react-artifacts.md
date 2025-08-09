@@ -1,5 +1,22 @@
 # React Artifact Development Guide for Claude's Renderer
 
+## Rules Table
+
+| Rule ID | Rule Summary |
+| ------- | ------------ |
+| A1      | Do not use form; use div with onClick/onChange instead |
+| A2      | Do not use import aliases; use direct imports or wrapper components |
+| A3      | No trailing commas, empty lines, or comments inside import blocks |
+| A4      | Do not use browser storage APIs; keep state in React only |
+| A5      | Only full Tailwind classes; no dynamic or arbitrary values |
+| A6      | Use only supported libraries (Three r128); CSS-in-JS not supported |
+| A7      | Only console.log, console.warn, and console.error are supported |
+| A8      | Workers, WebSocket, and device/media APIs are blocked |
+| A9      | Use window.fs with async/try-catch; no Node or sync fs |
+| A10     | Default export component; props have defaults; async only in effects |
+
+----
+
 ## Critical Constraints - Will Break Artifacts ⚠️
 
 These constraints are specific to Claude's artifact renderer and will cause complete failure if violated.

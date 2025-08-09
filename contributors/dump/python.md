@@ -298,4 +298,299 @@ class XPathEvaluator:
   - **Elimination of Dead Code**
   	- **Removal of Unused Code**: The refactored code removes commented-out code and unnecessary variables, streamlining the script.
   	- **Focus on Essential Functionality**: By focusing on the core functionality, the code is cleaner and more efficient.
- 
+
+
+
+ ----
+
+ **Prompt:**
+
+---
+
+**Context:** You're a software engineer working on a codebase that needs to be
+maintainable, scalable, and easy to understand. The codebase should adhere to
+industry best practices, focusing on modularity, separation of concerns, and
+clean architecture. The goal is to apply the following seven principles across
+the entire codebase:
+
+1. **Single Responsibility Principle (SRP):** Ensure each class, module, or
+   file has only one reason to change by assigning it a single responsibility.
+2. **Modularization:** Divide the codebase into distinct modules where each
+   module encapsulates related functionality, allowing for independent
+   development, testing, and maintenance.
+3. **Separation of Concerns:** Structure the code so that different concerns or
+   aspects of the system are handled by distinct sections, preventing overlap
+   and increasing clarity.
+4. **Layered Architecture:** Organize the system into layers, where each layer
+   has a distinct responsibility, and higher layers depend on the services
+   provided by lower layers.
+5. **Encapsulation:** Bundle data and the methods that operate on that data
+   within single units (e.g., classes) and restrict access to the internal
+   components to maintain integrity.
+6. **Package-by-Feature:** Organize the codebase by features rather than by
+   technical layers, ensuring that all related code (e.g., models, services,
+   controllers) for a feature is grouped together.
+7. **Component-Based Architecture:** Divide the system into reusable
+   components, each encapsulating a specific piece of functionality, allowing
+   them to be combined to form the full system.
+
+**Task:** When refactoring or generating new code, follow the above principles
+meticulously. Below are examples that demonstrate how to apply these principles
+effectively.
+
+---
+
+**Few-Shot Examples:**
+
+---
+
+**Example 1: Single Responsibility Principle (SRP)**
+
+**Original Code:**
+
+```python
+class UserManager:
+    def create_user(self, user_data):
+        # logic to create a user
+    def delete_user(self, user_id):
+        # logic to delete a user
+    def update_user(self, user_id, new_data):
+        # logic to update a user
+    def log_user_activity(self, user_id, activity):
+        # logic to log user activity
+```
+
+**Refactored Code Applying SRP:**
+
+```python
+class UserService:
+    def create_user(self, user_data):
+        # logic to create a user
+
+    def delete_user(self, user_id):
+        # logic to delete a user
+
+    def update_user(self, user_id, new_data):
+        # logic to update a user
+
+class UserActivityLogger:
+    def log_user_activity(self, user_id, activity):
+        # logic to log user activity
+```
+
+_Explanation:_ The `UserManager` class has been refactored into two classes,
+each with a single responsibility. The `UserService` handles user management,
+while the `UserActivityLogger` handles activity logging. This refactor adheres
+to the SRP and improves modularization and encapsulation.
+
+---
+
+**Example 2: Modularization**
+
+**Original Codebase:**
+
+```plaintext
+project-root/
+├── user_manager.py    # Contains all logic related to users, from creation to logging activities
+```
+
+**Refactored Codebase Applying Modularization:**
+
+```plaintext
+project-root/
+├── user/
+│   ├── __init__.py    # Initializes the user module
+│   ├── service.py     # Contains user management logic (create, update, delete)
+│   ├── logger.py      # Contains user activity logging logic
+```
+
+_Explanation:_ The codebase has been modularized by separating the user-related
+logic into distinct modules (e.g., `service.py` for user management and
+`logger.py` for activity logging). This allows each module to be developed,
+tested, and maintained independently.
+
+---
+
+**Example 3: Separation of Concerns**
+
+**Original Code:**
+
+```python
+def handle_user_request(request):
+    # directly interacts with the database
+    # performs business logic
+    # returns a response
+```
+
+**Refactored Code Applying Separation of Concerns:**
+
+```python
+class UserController:
+    def __init__(self, user_service):
+        self.user_service = user_service
+
+    def handle_request(self, request):
+        user_data = self.user_service.process_request(request)
+        return user_data
+```
+
+_Explanation:_ The logic has been separated into distinct concerns: the
+controller (`UserController`) handles the request and coordinates with the
+service (`UserService`) to process it. This prevents overlap between database
+interactions, business logic, and request handling, improving clarity and
+maintainability.
+
+---
+
+**Example 4: Layered Architecture**
+
+**Original Code:**
+
+```python
+def handle_request(request):
+    # directly interacts with the database
+    # performs business logic
+    # returns a response
+```
+
+**Refactored Code with Layered Architecture:**
+
+```python
+class RequestHandler:
+    def __init__(self, business_logic, database):
+        self.business_logic = business_logic
+        self.database = database
+
+    def handle_request(self, request):
+        data = self.database.get_data(request)
+        result = self.business_logic.process(data)
+        return result
+```
+
+_Explanation:_ The logic has been separated into distinct layers: a database
+layer and a business logic layer. The `RequestHandler` class coordinates
+between these layers, making the code more maintainable and easier to extend.
+
+---
+
+**Example 5: Encapsulation**
+
+**Original Code:**
+
+```python
+user_data = {'name': 'John Doe', 'email': 'john@example.com'}
+```
+
+**Refactored Code Applying Encapsulation:**
+
+```python
+class User:
+    def __init__(self, name, email):
+        self._name = name
+        self._email = email
+
+    def get_name(self):
+        return self._name
+
+    def get_email(self):
+        return self._email
+```
+
+_Explanation:_ The user data is now encapsulated within the `User` class. This
+class provides methods to access the data, ensuring that the internal state is
+protected and can only be accessed through defined interfaces.
+
+---
+
+**Example 6: Package-by-Feature**
+
+**Original Project Structure:**
+
+```plaintext
+project-root/
+├── models/
+│   ├── user.py
+│   ├── order.py
+├── services/
+│   ├── user_service.py
+│   ├── order_service.py
+├── controllers/
+│   ├── user_controller.py
+│   ├── order_controller.py
+```
+
+**Refactored Project Structure Applying Package-by-Feature:**
+
+```plaintext
+project-root/
+├── user/
+│   ├── __init__.py
+│   ├── models.py       # User model definition
+│   ├── service.py      # User management logic
+│   ├── controller.py   # User-related request handling
+├── order/
+│   ├── __init__.py
+│   ├── models.py       # Order model definition
+│   ├── service.py      # Order management logic
+│   ├── controller.py   # Order-related request handling
+```
+
+_Explanation:_ The project has been reorganized to follow the
+Package-by-Feature pattern. Each feature (e.g., `user`, `order`) has its own
+directory, containing the relevant models, services, and controllers. This
+improves modularity and makes the codebase easier to navigate.
+
+---
+
+**Example 7: Component-Based Architecture**
+
+**Original Codebase:**
+
+```plaintext
+project-root/
+├── core/
+│   ├── user_manager.py
+│   ├── order_manager.py
+```
+
+**Refactored Codebase Applying Component-Based Architecture:**
+
+```plaintext
+project-root/
+├── components/
+│   ├── user/
+│   │   ├── __init__.py
+│   │   ├── service.py    # User management logic
+│   │   ├── controller.py # User-related request handling
+│   │   ├── models.py     # User model definition
+│   │
+│   ├── order/
+│       ├── __init__.py
+│       ├── service.py    # Order management logic
+│       ├── controller.py # Order-related request handling
+│       ├── models.py     # Order model definition
+```
+
+_Explanation:_ The codebase is organized into reusable components (e.g.,
+`user`, `order`). Each component encapsulates a specific piece of
+functionality, making the system modular, maintainable, and scalable.
+Components can be developed, tested, and deployed independently.
+
+---
+
+**Instructions:**
+
+- Apply the principles demonstrated in the examples above to all aspects of the
+  codebase.
+- When creating new files or refactoring existing ones, ensure that each file
+  has a single responsibility, is part of a well-defined module, and fits into
+  the larger architecture in a clear and maintainable way.
+- Use Package-by-Feature organization and ensure that each feature's components
+  are grouped together.
+- Maintain clear separation between different concerns, and use layered
+  architecture where applicable.
+- Ensure that all methods and data are properly encapsulated within their
+  respective classes.
+- Think of each module as a reusable component, and design it to be independent
+  and easily combinable with other components
+

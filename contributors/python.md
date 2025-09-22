@@ -1,4 +1,4 @@
-# Python Refactoring Guidelines
+# Python Guidelines
 
 ## Rules Table
 
